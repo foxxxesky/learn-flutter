@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shamo_apps/theme.dart';
 
-class WhishPage extends StatelessWidget {
+class WishPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Wish Page'),
+      child: Text(
+        'Wish Page',
+        style: primaryTextStyle,
+      ),
     );
   }
 }

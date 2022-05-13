@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shamo_apps/pages/home/home_page.dart';
 import 'package:shamo_apps/theme.dart';
+import 'home_page.dart';
+import 'chat_page.dart';
+import 'whishlist_page.dart';
+import 'profile_page.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     Widget cartButton() {
@@ -24,37 +36,63 @@ class MainPage extends StatelessWidget {
         ),
         child: BottomAppBar(
           shape: CircularNotchedRectangle(),
-          notchMargin: 10,
+          notchMargin: 12,
           clipBehavior: Clip.antiAlias,
           child: BottomNavigationBar(
             backgroundColor: backgroundColor4,
             type: BottomNavigationBarType.fixed,
+            currentIndex: currentIndex,
+            onTap: (value) {
+              setState(() {
+                currentIndex = value;
+              });
+            },
             items: [
               BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/home_icon.png',
-                  width: 21,
+                icon: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  child: Image.asset(
+                    'assets/home_icon.png',
+                    width: 21,
+                    color:
+                        currentIndex == 0 ? primaryColor : nonactiveIconColor,
+                  ),
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/chat_icon.png',
-                  width: 20,
+                icon: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  child: Image.asset(
+                    'assets/chat_icon.png',
+                    width: 20,
+                    color:
+                        currentIndex == 1 ? primaryColor : nonactiveIconColor,
+                  ),
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/favorites_icon.png',
-                  width: 20,
+                icon: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  child: Image.asset(
+                    'assets/favorites_icon.png',
+                    width: 20,
+                    color:
+                        currentIndex == 2 ? primaryColor : nonactiveIconColor,
+                  ),
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/profile_nav.png',
-                  width: 18,
+                icon: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  child: Image.asset(
+                    'assets/profile_nav.png',
+                    width: 18,
+                    color:
+                        currentIndex == 3 ? primaryColor : nonactiveIconColor,
+                  ),
                 ),
                 label: '',
               ),
@@ -64,14 +102,31 @@ class MainPage extends StatelessWidget {
       );
     }
 
+    Widget body() {
+      switch (currentIndex) {
+        case 0:
+          return HomePage();
+          break;
+        case 1:
+          return ChatPage();
+          break;
+        case 2:
+          return WishPage();
+          break;
+        case 0:
+          return ProfilePage();
+          break;
+        default:
+          return HomePage();
+      }
+    }
+
     return Scaffold(
       backgroundColor: backgroundColor1,
       floatingActionButton: cartButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: customBottomNav(),
-      body: Center(
-        child: Text('Main Page'),
-      ),
+      body: body(),
     );
   }
 }
